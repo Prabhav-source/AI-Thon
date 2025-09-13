@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🌟 Adaptive Learning Platform</title>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #f9f9f9, #f0f4ff);
+      color: #333;
+    }
+
+    /* Navbar */
+    nav {
+      background: linear-gradient(90deg, #ff758c, #ff7eb3, #8f94fb);
+      padding: 15px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: white;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    nav h1 {
+      margin: 0;
+      font-size: 22px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 20px;
+      margin: 0;
+    }
+
+    nav ul li {
+      cursor: pointer;
+      font-weight: 600;
+      transition: transform 0.2s ease;
+    }
+
+    nav ul li:hover {
+      transform: scale(1.1);
+    }
+
+    /* Container */
+    .container {
+      padding: 30px;
+      animation: fadeIn 1s ease;
+    }
+
+    @keyframes fadeIn {
+      from {opacity: 0;}
+      to {opacity: 1;}
+    }
+
+    section {
+      background: white;
+      padding: 25px;
+      margin-bottom: 25px;
+      border-radius: 16px;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+      transition: transform 0.3s ease;
+    }
+
+    section:hover {
+      transform: translateY(-3px);
+    }
+
+    h2 {
+      color: #4e54c8;
+      margin-top: 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .upload-box {
+      border: 2px dashed #8f94fb;
+      padding: 30px;
+      text-align: center;
+      border-radius: 12px;
+      background: #f0f4ff;
+      transition: background 0.3s;
+    }
+
+    .upload-box:hover {
+      background: #e4e8ff;
+    }
+
+    .btn {
+      background: linear-gradient(90deg, #4e54c8, #8f94fb);
+      border: none;
+      color: white;
+      padding: 12px 22px;
+      border-radius: 30px;
+      cursor: pointer;
+      font-size: 15px;
+      margin-top: 15px;
+      transition: 0.3s;
+    }
+
+    .btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 4px 12px rgba(78,84,200,0.4);
+    }
+
+    .recommendations ul {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    .recommendations li {
+      background: #f0f4ff;
+      margin: 8px 0;
+      padding: 12px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 15px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 15px;
+      background: linear-gradient(90deg, #4e54c8, #8f94fb);
+      color: white;
+      margin-top: 20px;
+      border-top-left-radius: 12px;
+      border-top-right-radius: 12px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav>
+    <h1>📚 Adaptive Learning</h1>
+    <ul>
+      <li onclick="scrollToSection('upload')">📂 Upload</li>
+      <li onclick="scrollToSection('assessment')">📝 Assessments</li>
+      <li onclick="scrollToSection('analytics')">📊 Analytics</li>
+      <li onclick="scrollToSection('recommendations')">🤖 Recommendations</li>
+    </ul>
+  </nav>
+
+  <div class="container">
+
+    <!-- Upload Section -->
+    <section id="upload">
+      <h2>📂 Upload Study Documents</h2>
+      <div class="upload-box">
+        <p>📑 Drag & Drop files here or click below to upload</p>
+        <input type="file" multiple>
+        <br>
+        <button class="btn">🚀 Upload</button>
+      </div>
+    </section>
+
+    <!-- Assessment Section -->
+    <section id="assessment">
+      <h2>📝 Automated Assessment Generator</h2>
+      <p>✨ Generate quick practice questions based on uploaded content.</p>
+      <button class="btn" onclick="generateAssessment()">⚡ Generate Assessment</button>
+      <div id="assessment-output"></div>
+    </section>
+
+    <!-- Analytics Section -->
+    <section id="analytics">
+      <h2>📊 Progress Analytics</h2>
+      <canvas id="progressChart" width="400" height="200"></canvas>
+    </section>
+
+    <!-- Recommendations Section -->
+    <section id="recommendations" class="recommendations">
+      <h2>🤖 AI Study Recommendations</h2>
+      <ul id="recommend-list">
+        <li>📘 Review Chapter 2: Probability</li>
+        <li>💻 Practice more MCQs in Data Structures</li>
+        <li>🧮 Revise key formulas for Calculus</li>
+      </ul>
+      <button class="btn" onclick="addRecommendation()">✨ Get New Recommendation</button>
+    </section>
+
+  </div>
+
+  <footer>
+    <p>🌟 Adaptive Learning Platform © 2025 | Made with ❤️ for Students 🌟</p>
+  </footer>
+
+  <script>
+    // Smooth scroll
+    function scrollToSection(id) {
+      document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // Assessment Generator (Mockup)
+    function generateAssessment() {
+      const output = document.getElementById("assessment-output");
+      output.innerHTML = `
+        <ul>
+          <li>📝 Q1: Define Machine Learning in simple terms.</li>
+          <li>🧮 Q2: Solve: 2x + 3 = 11. Find x.</li>
+          <li>💻 Q3: Explain Stack vs Queue with examples.</li>
+        </ul>
+      `;
+    }
+
+    // Analytics Chart
+    const ctx = document.getElementById('progressChart');
+    new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
+        datasets: [{
+          label: '📈 Study Progress (%)',
+          data: [40, 55, 70, 85],
+          borderColor: '#ff758c',
+          backgroundColor: 'rgba(255, 118, 150, 0.2)',
+          fill: true,
+          tension: 0.3
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: { display: true }
+        }
+      }
+    });
+
+    // AI Recommendations (Mock)
+    function addRecommendation() {
+      const list = document.getElementById("recommend-list");
+      const newRec = document.createElement("li");
+      const recs = [
+        "💡 Solve 10 coding problems in Python",
+        "🗂 Revise key SQL queries",
+        "⚡ Focus on Time Complexity concepts",
+        "📖 Practice previous year exam papers",
+        "🔢 Do 5 probability problems"
+      ];
+      newRec.innerText = recs[Math.floor(Math.random() * recs.length)];
+      list.appendChild(newRec);
+    }
+  </script>
+
+</body>
+</html>
